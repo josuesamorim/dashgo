@@ -6,7 +6,7 @@ import { Sidebar } from '../../components/Sidebar';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { Spinner } from '@chakra-ui/core';
+import { Spinner } from '@chakra-ui/react';
 
 
 
