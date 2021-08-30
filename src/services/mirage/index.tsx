@@ -22,7 +22,7 @@ export function makeServer() {
                 email(){
                     return internet.email();
                 },
-                createAt(){
+                createdAt(){
                     return date.recent();
                 },
             })

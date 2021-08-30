@@ -16,8 +16,24 @@ export default function UserList() {
        const response = await fetch('http://localhost:3000/api/users');
        const data = await response.json();
 
-       return data;
+      const users = data.users.map(user => {
+          return {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              createdAt: new Date(user.createdAt).toLocaleString('pt-BR', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric'
+              })
+          }
+      })
+      
+       return users;
+       
     })
+
+    
 
     const isWideVersion = useBreakpointValue({
         base: false,
@@ -58,15 +74,15 @@ export default function UserList() {
                                     <Checkbox colorScheme="pink" />
                                 </Th>
                                 <Th>Usuário</Th>
-
+                                {isWideVersion && <Th>Data de cadastro</Th>}
                                 <Th w="8"></Th>
                             </Tr>
                         </Thead>
                         <Tbody>
 
-                        {data.users.map(user => {
+                        {data.map(user => {
                             return (
-                                <Tr>
+                                <Tr key={user.id} >
                                 <Td px={["4", "4", "6"]}>
                                     <Checkbox colorScheme="pink" />
                                 </Td>
@@ -76,7 +92,7 @@ export default function UserList() {
                                         <Text size="sm" color="gray.300">{user.email}</Text>
                                     </Box>
                                 </Td>
-                                {isWideVersion && (<Td>{user.date}</Td>)}
+                                {isWideVersion && (<Td>{user.createdAt}</Td>)}
 
                             </Tr>
                             )
@@ -97,16 +113,3 @@ export default function UserList() {
 }
 
 
-export async function getServeSideProps<GetServeSideProps>() {
-
-    const response = await fetch('http://localhost/api/users');
-
-    const data = await response.json();
-
-
-    return {
-        props: {
-            data
-        }
-    }
-}
